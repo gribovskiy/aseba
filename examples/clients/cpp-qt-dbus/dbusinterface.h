@@ -40,7 +40,7 @@ namespace Aseba
 
 		QDBusConnection bus;
 		typedef std::function<void(const Values&)> EventCallback;
-		std::map<QString, EventCallback> callbacks;
+		std::multimap<QString, EventCallback> callbacks;
 		QDBusInterface dbusMainInterface;
 		QDBusInterface* eventfilterInterface;
 

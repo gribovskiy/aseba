@@ -150,7 +150,7 @@ namespace Aseba
 	void DBusInterface::connectEvent(const QString& eventName, EventCallback callback)
 	{
 		// associate callback with event name
-		callbacks[eventName] = callback;
+		callbacks.insert(std::make_pair(eventName, callback));
 
 		// listen
 		eventfilterInterface->call("ListenEventName", eventName);
@@ -181,7 +181,9 @@ namespace Aseba
 		// find and trigger matching callback
 		if( callbacks.count(eventReceivedName) > 0)
 		{
-			callbacks[eventReceivedName](eventReceivedValues);
+			auto eventCallbacks = callbacks.equal_range(eventReceivedName);
+			for (auto iterator = eventCallbacks.first; iterator != eventCallbacks.second; ++iterator)
+				(iterator->second)(eventReceivedValues);
 		}
 	}
 }
