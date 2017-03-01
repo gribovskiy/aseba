@@ -31,11 +31,9 @@
 #include <dashel/dashel.h>
 #include "common/msg/msg.h"
 #include "common/msg/NodesManager.h"
-#include <common/msg/descriptions-manager.h>
 
-#include <string>
 
-class DashelInterface : public QThread, public Dashel::Hub, public Aseba::DescriptionsManager
+class DashelInterface : public QThread, public Dashel::Hub
 {
 	Q_OBJECT
 
@@ -43,17 +41,10 @@ class DashelInterface : public QThread, public Dashel::Hub, public Aseba::Descri
 		DashelInterface();
 		~DashelInterface();
 		void connectAseba(const QString& dashelTarget);
-        typedef std::vector<std::string> strings;
-        typedef std::map<std::string, Aseba::Compiler::VariablesMap> NodeNameToVariablesMap;
-		void connectAseba(const QString& dashelTarget);
 		void connectAseba(const QString& ip, const QString& port);
-        int loadAsebaScript(const std::string &dashelTarget);
 		void disconnectAseba();
 
 		void sendEvent(unsigned id, const QVector<int> &values = QVector<int>(0));
-
-        Dashel::Stream* stream;
-        QString dashelParams;
 
 	signals:
 		void messageAvailable(Aseba::UserMessage *message);
@@ -61,7 +52,6 @@ class DashelInterface : public QThread, public Dashel::Hub, public Aseba::Descri
 		void dashelConnection();
 
 	protected:
-		Dashel::Stream* targetStream;
 		// from QThread
 		virtual void run();
 
@@ -74,9 +64,6 @@ class DashelInterface : public QThread, public Dashel::Hub, public Aseba::Descri
 		QString dashelParams;
 		bool isRunning;
 		bool isConnected;
-
-        Aseba::CommonDefinitions commonDefinitions;
-        NodeNameToVariablesMap allVariables;
 };
 
 #endif // DASHELINTERFACE_H
