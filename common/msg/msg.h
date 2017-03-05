@@ -21,7 +21,6 @@
 #ifndef ASEBA_MSG
 #define ASEBA_MSG
 
-#include "../types.h"
 #include "../consts.h"
 #include "../../compiler/compiler.h"
 #include <vector>
