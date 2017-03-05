@@ -152,8 +152,9 @@ namespace Aseba
 		// associate callback with event name
 		callbacks.insert(std::make_pair(eventName, callback));
 
-		// listen
-		eventfilterInterface->call("ListenEventName", eventName);
+		// listen if connected first time
+		if (callbacks.count(eventName) == 1)
+			eventfilterInterface->call("ListenEventName", eventName);
 	}
 
 	//Send Aseba Event using the ID of the Event
